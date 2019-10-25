@@ -1,6 +1,5 @@
 import mmcv
 
-
 def voc_classes():
     return [
         'aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat',
@@ -8,7 +7,15 @@ def voc_classes():
         'pottedplant', 'sheep', 'sofa', 'train', 'tvmonitor'
     ]
 
+def person_classes():
+    return [
+        'person'
+    ]
 
+def anonym_classes():
+    return [
+        'person','plate'
+    ]
 def imagenet_det_classes():
     return [
         'accordion', 'airplane', 'ant', 'antelope', 'apple', 'armadillo',
@@ -79,10 +86,12 @@ def coco_classes():
 
 
 dataset_aliases = {
+    'person' : ['person'],
     'voc': ['voc', 'pascal_voc', 'voc07', 'voc12'],
     'imagenet_det': ['det', 'imagenet_det', 'ilsvrc_det'],
     'imagenet_vid': ['vid', 'imagenet_vid', 'ilsvrc_vid'],
-    'coco': ['coco', 'mscoco', 'ms_coco']
+    'coco': ['coco', 'mscoco', 'ms_coco'],
+    'anonym': ['anonym']
 }
 
 
@@ -92,7 +101,6 @@ def get_classes(dataset):
     for name, aliases in dataset_aliases.items():
         for alias in aliases:
             alias2name[alias] = name
-
     if mmcv.is_str(dataset):
         if dataset in alias2name:
             labels = eval(alias2name[dataset] + '_classes()')

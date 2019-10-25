@@ -176,6 +176,8 @@ class CustomDataset(Dataset):
         img_info = self.img_infos[idx]
         # load image
         img = mmcv.imread(osp.join(self.img_prefix, img_info['filename']))
+        bboxes = np.array([0, 0, img_info['width'], img_info['height']])
+        img = mmcv.imcrop(img, bboxes)
         # load proposals if necessary
         if self.proposals is not None:
             proposals = self.proposals[idx][:self.num_max_proposals]
@@ -267,6 +269,8 @@ class CustomDataset(Dataset):
         """Prepare an image for testing (multi-scale and flipping)"""
         img_info = self.img_infos[idx]
         img = mmcv.imread(osp.join(self.img_prefix, img_info['filename']))
+        bboxes = np.array([0, 0, img_info['width'], img_info['height']])
+        img = mmcv.imcrop(img, bboxes)
         if self.proposals is not None:
             proposal = self.proposals[idx][:self.num_max_proposals]
             if not (proposal.shape[1] == 4 or proposal.shape[1] == 5):
